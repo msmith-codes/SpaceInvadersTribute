@@ -6,7 +6,7 @@ const UPDATE_TIME = 0;
 
 function onStart()
 {
-    player = new Player(theCanvas, theCanvas.width / 2, theCanvas.height - 25);
+    player = new Player(theCanvas, theCanvas.width / 2 - 25, theCanvas.height - 25);
 }
 
 // Game Loop:
