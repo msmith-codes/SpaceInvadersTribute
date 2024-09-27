@@ -79,9 +79,13 @@ class Player extends GameObject
     onKeyUp(key)
     {
         switch(key) {
+            case "a":
+            case "j":
             case "ArrowLeft":
                 this.velocityX = 0;
                 break;
+            case "d":
+            case "k":
             case "ArrowRight":
                 this.velocityX = 0;
                 break;

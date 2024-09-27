@@ -11,6 +11,6 @@ The assignment can be found here: [Assignment](https://mirkwood.cs.edinboro.edu/
 
 ## KNOWN ISSUES
 - [ ] The player movement gets stuck with rapid direction switching.
-- [ ] The player won't stop when 'a' 'd' 'j' 'k' are used for input.
       
 ## FIXED ISSUES
+- [X] The player won't stop when 'a' 'd' 'j' 'k' are used for input.
