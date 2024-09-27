@@ -4,6 +4,12 @@ const theCanvas = new Canvas("canvasHolder", 800, 600);
 
 const UPDATE_TIME = 0;
 
+function onStart()
+{
+    player = new Player(theCanvas, theCanvas.width / 2, theCanvas.height - 25);
+}
+
+// Game Loop:
 function onUpdate()
 {
     const now = Date.now();
@@ -19,22 +25,27 @@ function onUpdate()
     lastUpdate = now;
 }
 
+// Input Handling:
 function KeyInputDown(event)
 {
     player.onKeyDown(event.key);
 }
 
+// Input Handling:
 function KeyInputUp(event)
 {
     player.onKeyUp(event.key);
 }
 
-// Event Listeners:
+// Register Event Listeners:
 theCanvas.AddListener("keydown", KeyInputDown);
-theCanvas.AddListener("keyup", KeyInputUp);
+theCanvas.AddListener("keyup", KeyInputUp); // <-- Added to handle key up events, for the player to stop moving.
 
-// Spawn the Player:
-let player = new Player(theCanvas, theCanvas.width / 2, theCanvas.height - 25);
+// Spawn Game Objects:
+let player = null;
+
+// Start Game:
+onStart();
 
 // Start Game Loop:
 let lastUpdate = Date.now();
