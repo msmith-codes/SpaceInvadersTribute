@@ -23,16 +23,29 @@ class Player extends GameObject
     onUpdate(delta)
     {
         // Update Position:
-        this.xPos += this.velocityX * delta;
-        this.yPos += this.velocityY * delta;
+        this.xPos += this.velocityX * (delta / 5);
+        this.yPos += this.velocityY * (delta / 5);
+        
+        // Clamp Position:
+        if(this.xPos < 10) {
+            this.xPos = 11;
+        }
+
+        if(this.xPos > theCanvas.width - 60) {
+            this.xPos = theCanvas.width - 60;
+        }
     }
 
     onKeyDown(key)
     {
         switch(key) {
+            case "a":
+            case "j":
             case "ArrowLeft":
                 this.velocityX = -1;
                 break;
+            case "d":
+            case "k":
             case "ArrowRight":
                 this.velocityX = 1;
                 break;

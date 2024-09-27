@@ -7,7 +7,7 @@ const UPDATE_TIME = 0;
 function onUpdate()
 {
     const now = Date.now();
-    let delta = now - lastUpdate;
+    const delta = now - lastUpdate;
     
     // Rendering:
     theCanvas.Clear();
