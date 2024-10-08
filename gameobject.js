@@ -7,7 +7,6 @@ class GameObject
     yPos;
     velocityX;
     velocityY;
-
     canvas;
 
     constructor(canvas, x, y)
