@@ -80,6 +80,13 @@ function onUpdate()
                 player.bullet = null;
                 element.onDeath();
             }
+            for(let alien of fleet.aliens) {
+                if(alien.alive()) {
+                    if(checkCollision(alien, element)) {
+                        element.onDeath();
+                    }
+                }
+            }
         }
     }
 
@@ -89,6 +96,13 @@ function onUpdate()
                 player.bullet = null;
                 element.onDeath();
             }
+            for(let alien of fleet.aliens) {
+                if(alien.alive()) {
+                    if(checkCollision(alien, element)) {
+                        element.onDeath();
+                    }
+                }
+            }
         }
     }
 
@@ -97,6 +111,13 @@ function onUpdate()
             if(checkCollision(player.bullet, element)) {
                 player.bullet = null;
                 element.onDeath();
+            }
+            for(let alien of fleet.aliens) {
+                if(alien.alive()) {
+                    if(checkCollision(alien, element)) {
+                        element.onDeath();
+                    }
+                }
             }
         }
     }
@@ -121,6 +142,7 @@ function onUpdate()
         if(alien.alive()) {
             if(checkCollision(alien, player)) {
                 lives--;
+                tempScore = 0;
                 document.getElementById("lives").innerHTML = "Lives: " + lives;
                 if(lives == 0) {
                     window.location.href = "gameover.html";
