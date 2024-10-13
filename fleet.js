@@ -7,7 +7,7 @@ class Fleet extends GameObject
     #currentState = "movingRight";
     #fleetRows = 3;
     #fleetColumns = 9;
-    #speed = 200;
+    #speed = 150;
 
     aliens = [];
 
@@ -17,9 +17,9 @@ class Fleet extends GameObject
 
         for(let row = 0; row < this.#fleetRows; row++) {  
             for(let column = 0; column < this.#fleetColumns; column++) {
-                const xAlien = 48 * column;
-                const yAlien = 48 * row;
-                this.aliens.push(new Alien(canvas, xAlien, yAlien));
+                const xAlienPos = 48 * column;
+                const yAlienPos = 48 * row;
+                this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos));
             }
         }
     }

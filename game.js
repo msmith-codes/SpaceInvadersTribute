@@ -41,6 +41,14 @@ function onUpdate()
             }
         }
     }
+    
+    for(let alien of fleet.aliens) {
+        if(alien.alive()) {
+            if(checkCollision(player, alien)) {
+                console.log("Game Over");
+            }
+        }   
+    }
 
 }
 
