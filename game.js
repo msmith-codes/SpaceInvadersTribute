@@ -1,6 +1,6 @@
 "use strict";
 
-const theCanvas = new Canvas("canvasHolder", 800, 600);
+const theCanvas = new Canvas("canvasContainer", 800, 600);
 
 const FPS = 60;
 const MS_PER_FRAME = FPS / 1000;
@@ -46,6 +46,7 @@ function onUpdate()
         if(alien.alive()) {
             if(checkCollision(player, alien)) {
                 console.log("Game Over");
+                window.location.href = "gameover.html";
             }
         }   
     }
