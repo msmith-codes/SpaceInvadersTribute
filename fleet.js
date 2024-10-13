@@ -8,7 +8,6 @@ class Fleet extends GameObject
     #fleetRows = 3;
     #fleetColumns = 9;
     #speed = 150;
-
     aliens = [];
 
     constructor(canvas, x, y)
@@ -71,7 +70,24 @@ class Fleet extends GameObject
         
         shouldMovedown = false;
         
+        // Update the aliens:
+        for(let alien of this.aliens) {
+            alien.onUpdate(delta);
+        }
+
         this.xPos += this.velocityX * this.#speed * (delta);        
         this.yPos += this.velocityY * this.#speed * (delta);
     }
+
+    increaseSpeed()
+    {
+        this.#speed += 5;
+    }
+
+    resetSpeed()
+    {
+        this.#speed = 150;
+    }
+
+
 }

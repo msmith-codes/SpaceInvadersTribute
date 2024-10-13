@@ -4,6 +4,8 @@ class Player extends GameObject
 {
     #speed = 200;
     bullet;
+    width = 50;
+    height = 20;
     // ---------------------------------------------------------------
     // Developer Notes (Michael):
     // This method is called every frame to draw the player.
@@ -11,8 +13,8 @@ class Player extends GameObject
     onDraw()
     {
         // Draw the player's body:
-        for(let x = 0; x < 50; x++) {
-            for(let y = 0; y < 20; y++) {
+        for(let x = 0; x < this.width; x++) {
+            for(let y = 0; y < this.height; y++) {
                 this.canvas.SetPixel(this.xPos + x, this.yPos + y, 0, 255, 0);
             }
         }
@@ -39,7 +41,6 @@ class Player extends GameObject
     {
         // Update the player's position:
         this.xPos += this.velocityX * this.#speed * (delta);
-        this.yPos += this.velocityY * this.#speed * (delta);
         
         // Clamp Position:
         if(this.xPos < 10) {
@@ -82,6 +83,7 @@ class Player extends GameObject
                 this.velocityX = 1;
                 break;
             case "f":
+            case "ArrowUp":
             case " ":
                 // Spawn Bullet:
                 if(this.bullet == null) {

@@ -12,10 +12,11 @@ The assignment can be found here: [Assignment](https://mirkwood.cs.edinboro.edu/
 - [ ] The aliens fire shots at the player.
 - [ ] The player can be hit by alien shots.
 - [X] The player can hit aliens.
-- [ ] Game over screen when the player dies.
+- [X] Game over screen when the player dies.
 - [ ] Four shields at the bottom of the screen that can be destroyed by player shots.
-- [ ] A score counter.
-- [ ] A level counter.
+- [X] A score counter.
+- [X] A level counter.
+- [ ] A lives counter.
 
 ## KNOWN ISSUES
       

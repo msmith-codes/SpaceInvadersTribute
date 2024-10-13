@@ -4,12 +4,24 @@ const theCanvas = new Canvas("canvasContainer", 800, 600);
 
 const FPS = 60;
 const MS_PER_FRAME = FPS / 1000;
-const UPDATE_TIME = 14;
+const UPDATE_TIME = 30;
+
+const POINTS_PER_ALIEN = 100;
+const MAX_SCORE = 2700;
+let score = 0;
+let tempScore = 0;
+let level = 1;
+let lives = 3;
 
 function onStart()
 {
     player = new Player(theCanvas, theCanvas.width / 2 - 25, theCanvas.height - 25);
     fleet = new Fleet(theCanvas, 0, 0);
+    
+    shield0 = new Shield(theCanvas, 100, theCanvas.height - 100);
+    shield1 = new Shield(theCanvas, 300, theCanvas.height - 100);
+    shield2 = new Shield(theCanvas, 500, theCanvas.height - 100);
+    shield3 = new Shield(theCanvas, 700, theCanvas.height - 100);
 }
 
 // Game Loop:
@@ -26,7 +38,12 @@ function onUpdate()
     // Rendering:
     player.onDraw();
     fleet.onDraw();
-   
+
+    shield0.onDraw();    
+    shield1.onDraw();
+    shield2.onDraw();
+    shield3.onDraw();
+
     delta = delta / 1000;
 
     player.onUpdate(delta);
@@ -38,16 +55,79 @@ function onUpdate()
             if(checkCollision(player.bullet, alien)) {
                 player.bullet = null;
                 alien.onDeath();
+                score += POINTS_PER_ALIEN; 
+                tempScore += POINTS_PER_ALIEN;
+                fleet.increaseSpeed();
+
+                document.getElementById("score").innerHTML = "Score: " + score;
+                
+                if(tempScore == MAX_SCORE) {
+                    level++;
+                    document.getElementById("level").innerHTML = "Level: " + level; 
+                    tempScore = 0;
+                    document.getElementById("score").innerHTML = "Score: " + score;
+                    fleet.resetSpeed();
+                    onStart();
+                }
+
             }
         }
     }
     
+    for(let element of shield0.elements) {
+        if(element.alive()) {
+            if(checkCollision(player.bullet, element)) {
+                player.bullet = null;
+                element.onDeath();
+            }
+        }
+    }
+
+    for(let element of shield1.elements) {
+        if(element.alive()) {
+            if(checkCollision(player.bullet, element)) {
+                player.bullet = null;
+                element.onDeath();
+            }
+        }
+    }
+
+    for(let element of shield2.elements) {
+        if(element.alive()) {
+            if(checkCollision(player.bullet, element)) {
+                player.bullet = null;
+                element.onDeath();
+            }
+        }
+    }
+
+    for(let element of shield3.elements) {
+        if(element.alive()) {
+            if(checkCollision(player.bullet, element)) {
+                player.bullet = null;
+                element.onDeath();
+            }
+            for(let alien of fleet.aliens) {
+                if(alien.alive()) {
+                    if(checkCollision(alien, element)) {
+                        element.onDeath();
+                    }
+                }
+            }
+        }
+    }
+
     for(let alien of fleet.aliens) {
         if(alien.alive()) {
-            if(checkCollision(player, alien)) {
-                console.log("Game Over");
-                window.location.href = "gameover.html";
-            }
+            if(checkCollision(alien, player)) {
+                lives--;
+                document.getElementById("lives").innerHTML = "Lives: " + lives;
+                if(lives == 0) {
+                    window.location.href = "gameover.html";
+                } else {
+                    onStart();
+                }   
+            }   
         }   
     }
 
@@ -84,6 +164,11 @@ theCanvas.AddListener("keyup", KeyInputUp); // <-- Added to handle key up events
 
 // Spawn Game Objects:
 let player = null;
+
+let shield0 = null;
+let shield1 = null;
+let shield2 = null;
+let shield3 = null;
 
 let fleet = null;
 

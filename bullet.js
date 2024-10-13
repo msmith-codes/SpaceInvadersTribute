@@ -17,7 +17,6 @@ class Bullet extends GameObject
 
     onUpdate(delta)
     {
-        this.xPos += this.velocityX * this.#speed * (delta);  
         this.yPos += this.velocityY * this.#speed * (delta);
     }
 }
