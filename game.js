@@ -7,7 +7,7 @@ const MS_PER_FRAME = FPS / 1000;
 const UPDATE_TIME = 30;
 
 const POINTS_PER_ALIEN = 100;
-const MAX_SCORE = 2700;
+const MAX_SCORE = 55 * POINTS_PER_ALIEN;
 let score = 0;
 let tempScore = 0;
 let level = 1;

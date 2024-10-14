@@ -7,6 +7,7 @@ class Alien extends GameObject
     height = 15;
     animation = 0;
     time = 0;
+
     onDraw()
     {
         // Draw the alien's body:

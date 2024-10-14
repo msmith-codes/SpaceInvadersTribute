@@ -5,9 +5,9 @@ class Fleet extends GameObject
     #debug = false;
 
     #currentState = "movingRight";
-    #fleetRows = 3;
-    #fleetColumns = 9;
-    #speed = 150;
+    #fleetRows = 5;
+    #fleetColumns = 11;
+    #speed = 25;
     aliens = [];
 
     constructor(canvas, x, y)
@@ -16,8 +16,8 @@ class Fleet extends GameObject
 
         for(let row = 0; row < this.#fleetRows; row++) {  
             for(let column = 0; column < this.#fleetColumns; column++) {
-                const xAlienPos = 48 * column;
-                const yAlienPos = 48 * row;
+                const xAlienPos = 38 * column;
+                const yAlienPos = 38 * row;
                 this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos));
             }
         }
@@ -28,8 +28,8 @@ class Fleet extends GameObject
         // Draw a box a hallow box around the fleet:
         if(this.#debug) {
             for(let x = 0; x < 400; x++) {
-                for(let y = 0; y < 200; y++) {
-                    if(x == 0 || y == 0 || x == 399 || y == 199) {
+                for(let y = 0; y < 170; y++) {
+                    if(x == 0 || y == 0 || x == 399 || y == 169) {
                         this.canvas.SetPixel(this.xPos + x, this.yPos + y, 0, 0, 255);
                     }
                 }
@@ -81,12 +81,12 @@ class Fleet extends GameObject
 
     increaseSpeed()
     {
-        this.#speed += 5;
+        this.#speed += 1;
     }
 
     resetSpeed()
     {
-        this.#speed = 150;
+        this.#speed = 25;
     }
 
 
