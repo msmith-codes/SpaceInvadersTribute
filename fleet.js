@@ -2,7 +2,7 @@
 
 class Fleet extends GameObject
 {
-    #debug = false;
+    #debug = true;
 
     #currentState = "movingRight";
     #fleetRows = 5;
@@ -51,9 +51,9 @@ class Fleet extends GameObject
     {
         // Draw a box a hallow box around the fleet:
         if(this.#debug) {
-            for(let x = 0; x < 400; x++) {
-                for(let y = 0; y < 170; y++) {
-                    if(x == 0 || y == 0 || x == 399 || y == 169) {
+            for(let x = 0; x < this.width; x++) {
+                for(let y = 0; y < this.height; y++) {
+                    if(x == 0 || y == 0 || x == this.width - 1|| y == this.height - 1) {
                         this.canvas.SetPixel(this.xPos + x, this.yPos + y, 0, 0, 255);
                     }
                 }
@@ -72,7 +72,7 @@ class Fleet extends GameObject
         this.#timer += delta;
         if(this.#currentState == "movingRight") {
             this.velocityX = 1;
-            if(this.xPos > 400) {
+            if(this.xPos > this.width) {
                 this.#currentState = "movingLeft";
                 this.yPos += 20;
                 shouldMovedown = true;
@@ -119,6 +119,49 @@ class Fleet extends GameObject
                     }
                 }
             }
+        }
+        
+        let leftDeadCount = 0;
+        for(let a of this.leftMostColumn) {
+            if(!a.alive()) {
+                leftDeadCount++;
+            }
+        }
+
+        if(leftDeadCount == this.#fleetRows) {
+            let newLeftMostColumn = [];
+            for(let i = 0; i < this.leftMostColumn.length; i++) {
+                let la = this.leftMostColumn[i];
+                for(let a of this.aliens) {
+                    if(a.index == la.index + 1) {
+                        newLeftMostColumn.push(a);
+                    }
+                }
+ 
+            }
+            this.leftMostColumn = newLeftMostColumn;
+        }
+        
+        let rightDeadCount = 0;
+        for(let a of this.rightMostColumn) {
+            if(!a.alive()) {
+                rightDeadCount++;
+            }
+        }
+
+        if(rightDeadCount == this.#fleetRows) {
+            let newRightMostColumn = [];
+            for(let i = 0; i < this.rightMostColumn.length; i++) {
+                let la = this.rightMostColumn[i];
+                for(let a of this.aliens) {
+                    if(a.index == la.index - 1) {
+                        newRightMostColumn.push(a);
+                    }
+                }
+ 
+            }
+            this.rightMostColumn = newRightMostColumn;
+            console.log(this.rightMostColumn);
         }
 
         this.xPos += this.velocityX * this.#speed * (delta);        
