@@ -74,7 +74,7 @@ class Fleet extends GameObject
         this.#timer += delta;
         if(this.#currentState == "movingRight") {
             this.velocityX = 1;
-            if(this.xPos > 400 + this.rightColumnOffset) {
+            if(this.xPos > (800 - (this.width))){
                 this.#currentState = "movingLeft";
                 this.yPos += 20;
                 shouldMovedown = true;
@@ -144,6 +144,7 @@ class Fleet extends GameObject
             this.leftMostColumn = newLeftMostColumn;
 
             this.width -= 38;
+            //this.rightColumnOffset += 38;
             this.xPos += 38;
         }
         
