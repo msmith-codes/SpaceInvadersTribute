@@ -2,25 +2,28 @@
 
 class Alien extends GameObject
 {
-    #isAlive = true;
+    isAlive = true;
     width = 15;
     height = 15;
     animation = 0;
     time = 0;
     bullet;
+    index = 0;
     #fleet;
 
-    constructor(canvas, x, y, fleet)
+    constructor(canvas, x, y, fleet, index)
     {   
         super(canvas, x, y);
         this.#fleet = fleet;
+        this.index = index;
     }
 
     onDraw()
     {
         // Draw the alien's body:
-        if(this.#isAlive) {
+        if(this.isAlive) {
             if(this.animation == 0) {
+                // don't question the magic numbers, they just work
                 this.canvas.SetPixel(this.xPos + 7, this.yPos, 0, 0, 255);
                 this.canvas.SetPixel(this.xPos + 6, this.yPos + 1, 0, 0, 255);
                 this.canvas.SetPixel(this.xPos + 8, this.yPos + 1, 0, 0, 255);
@@ -76,7 +79,7 @@ class Alien extends GameObject
 
     onUpdate(delta)
     {
-        if(this.#isAlive) {
+        if(this.isAlive) {
             this.time += delta;
             if(this.time > 1) {
                 this.time = 0;
@@ -97,17 +100,17 @@ class Alien extends GameObject
     { 
         this.animation = 2;
         await new Promise(r => setTimeout(r, 250));
-        this.#isAlive = false;
+        this.isAlive = false;
     }
 
     alive()
     {
-        return this.#isAlive;
+        return this.isAlive;
     }
 
     shoot()
     {
-        if(this.#isAlive) {
+        if(this.isAlive) {
             this.bullet = new AlienBullet(theCanvas, this.xPos + 7, this.yPos + 20);
             this.bullet.velocityY = 1;
         }  

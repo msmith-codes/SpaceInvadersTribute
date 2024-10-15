@@ -9,19 +9,41 @@ class Fleet extends GameObject
     #fleetColumns = 11;
     #speed = 25;
     #timer = 0;
+    width = 400;
+    height = 170;
     bulletsPresent = 0;
     aliens = [];
+    shootingAlien = [];
+    leftMostColumn = [];
+    rightMostColumn = [];
 
     constructor(canvas, x, y)
     {
         super(canvas, x, y);
-
+        
+        let index = 0;
         for(let row = 0; row < this.#fleetRows; row++) {  
             for(let column = 0; column < this.#fleetColumns; column++) {
                 const xAlienPos = 38 * column;
                 const yAlienPos = 38 * row;
-                this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos, this));
+                this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos, this, index));
+                index++;
             }
+        }
+        
+
+        for(let i = 0; i < this.aliens.length; i++) {
+            if(i > 43) {
+                this.shootingAlien.push(this.aliens[i]);
+            }
+            if(i % 11 == 0) {
+                this.leftMostColumn.push(this.aliens[i]);
+            }
+            
+            if(i % 11 == 10) {
+                this.rightMostColumn.push(this.aliens[i]);
+            }
+
         }
     }
 
@@ -80,16 +102,24 @@ class Fleet extends GameObject
             alien.onUpdate(delta);
         }
 
-        // Pick a random alien to shoot:
-        if(this.#timer > 0.7) {
+        // Pick a random alien to shoot from the bottom row:
+        if(this.#timer > 1) {
             this.#timer = 0;
-            if(this.bulletsPresent < 4) {
-                let randomAlien = Math.floor(Math.random() * this.aliens.length);
-                this.aliens[randomAlien].shoot();
-                this.bulletsPresent++;
-            }
+            let randomAlien = Math.floor(Math.random() * this.shootingAlien.length);
+            this.shootingAlien[randomAlien].shoot();
         }
         
+        for(let a of this.shootingAlien) {
+            if(!a.alive()) { 
+                let aIndex = a.index;
+                for(let a2 of this.aliens) {
+                    if(a2.index == aIndex - this.#fleetColumns) {
+                        this.shootingAlien.push(a2);
+                        this.shootingAlien.splice(this.shootingAlien.indexOf(a), 1);
+                    }
+                }
+            }
+        }
 
         this.xPos += this.velocityX * this.#speed * (delta);        
         this.yPos += this.velocityY * this.#speed * (delta);
