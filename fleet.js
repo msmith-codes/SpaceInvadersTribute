@@ -8,6 +8,8 @@ class Fleet extends GameObject
     #fleetRows = 5;
     #fleetColumns = 11;
     #speed = 25;
+    #timer = 0;
+    bulletsPresent = 0;
     aliens = [];
 
     constructor(canvas, x, y)
@@ -18,7 +20,7 @@ class Fleet extends GameObject
             for(let column = 0; column < this.#fleetColumns; column++) {
                 const xAlienPos = 38 * column;
                 const yAlienPos = 38 * row;
-                this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos));
+                this.aliens.push(new Alien(canvas, xAlienPos, yAlienPos, this));
             }
         }
     }
@@ -45,6 +47,7 @@ class Fleet extends GameObject
     onUpdate(delta)
     {
         let shouldMovedown = false;
+        this.#timer += delta;
         if(this.#currentState == "movingRight") {
             this.velocityX = 1;
             if(this.xPos > 400) {
@@ -60,7 +63,9 @@ class Fleet extends GameObject
                 shouldMovedown = true;
             }
         } 
+        
          
+
         for(let alien of this.aliens) {
             alien.xPos += this.velocityX * this.#speed * (delta);
             if(shouldMovedown) {
@@ -74,6 +79,17 @@ class Fleet extends GameObject
         for(let alien of this.aliens) {
             alien.onUpdate(delta);
         }
+
+        // Pick a random alien to shoot:
+        if(this.#timer > 0.7) {
+            this.#timer = 0;
+            if(this.bulletsPresent < 4) {
+                let randomAlien = Math.floor(Math.random() * this.aliens.length);
+                this.aliens[randomAlien].shoot();
+                this.bulletsPresent++;
+            }
+        }
+        
 
         this.xPos += this.velocityX * this.#speed * (delta);        
         this.yPos += this.velocityY * this.#speed * (delta);

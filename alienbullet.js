@@ -1,8 +1,8 @@
 "use strict";
 
-class Bullet extends GameObject
+class AlienBullet extends GameObject
 {
-    #speed = 500;
+    #speed = 100;
     width = 4;
     height = 10;
     onDraw()

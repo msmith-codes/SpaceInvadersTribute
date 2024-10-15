@@ -7,6 +7,14 @@ class Alien extends GameObject
     height = 15;
     animation = 0;
     time = 0;
+    bullet;
+    #fleet;
+
+    constructor(canvas, x, y, fleet)
+    {   
+        super(canvas, x, y);
+        this.#fleet = fleet;
+    }
 
     onDraw()
     {
@@ -41,7 +49,7 @@ class Alien extends GameObject
                 this.canvas.SetPixel(this.xPos + 6, this.yPos + 13, 0, 0, 255);
                 this.canvas.SetPixel(this.xPos + 8, this.yPos + 13, 0, 0, 255);
                 this.canvas.SetPixel(this.xPos + 7, this.yPos + 14, 0, 0, 255);
-            } else {
+            } else if(this.animation == 1) {
                 for(let x = 0; x < this.width; x++) {
                     for(let y = 0; y < this.height; y++) {
                         if(x == 0 || y == 0 || x == this.width - 1 || y == this.height - 1) {
@@ -49,7 +57,20 @@ class Alien extends GameObject
                         }
                     }
                 }
+            } else {
+                // Draw some random pixels for the alien death
+                for(let x = 0; x < this.width; x++) {
+                    for(let y = 0; y < this.height; y++) {
+                        if(Math.random() > 0.95) {
+                            this.canvas.SetPixel(this.xPos + x, this.yPos + y, 0, 0, 255);
+                        }
+                    }
+                }
             }
+            
+        }
+        if(this.bullet != null) {
+            this.bullet.onDraw();
         }
     }       
 
@@ -62,15 +83,33 @@ class Alien extends GameObject
                 this.animation = (this.animation + 1) % 2;
             }
         }
+        if(this.bullet != null) {
+            if(this.bullet.yPos > theCanvas.height) {
+                this.bullet = null;
+                this.#fleet.bulletsPresent--;
+            } else {
+                this.bullet.onUpdate(delta);
+            }
+        }
     }
-
-    onDeath()
-    {
+    
+    async onDeath()
+    { 
+        this.animation = 2;
+        await new Promise(r => setTimeout(r, 250));
         this.#isAlive = false;
     }
 
     alive()
     {
         return this.#isAlive;
+    }
+
+    shoot()
+    {
+        if(this.#isAlive) {
+            this.bullet = new AlienBullet(theCanvas, this.xPos + 7, this.yPos + 20);
+            this.bullet.velocityY = 1;
+        }  
     }
 }
