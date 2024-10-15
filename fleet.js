@@ -16,6 +16,8 @@ class Fleet extends GameObject
     shootingAlien = [];
     leftMostColumn = [];
     rightMostColumn = [];
+    
+    rightColumnOffset = 0; 
 
     constructor(canvas, x, y)
     {
@@ -72,7 +74,7 @@ class Fleet extends GameObject
         this.#timer += delta;
         if(this.#currentState == "movingRight") {
             this.velocityX = 1;
-            if(this.xPos > this.width) {
+            if(this.xPos > 400 + this.rightColumnOffset) {
                 this.#currentState = "movingLeft";
                 this.yPos += 20;
                 shouldMovedown = true;
@@ -140,6 +142,9 @@ class Fleet extends GameObject
  
             }
             this.leftMostColumn = newLeftMostColumn;
+
+            this.width -= 38;
+            this.xPos += 38;
         }
         
         let rightDeadCount = 0;
@@ -161,8 +166,11 @@ class Fleet extends GameObject
  
             }
             this.rightMostColumn = newRightMostColumn;
-            console.log(this.rightMostColumn);
+            this.rightColumnOffset += 38; 
+            this.width -= 38;
         }
+        
+        
 
         this.xPos += this.velocityX * this.#speed * (delta);        
         this.yPos += this.velocityY * this.#speed * (delta);
