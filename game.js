@@ -89,6 +89,7 @@ function onUpdate()
                         alien.bullet = null;
                         fleet.bulletPresent--;
                         element.onDeath();
+                        console.log("deleting bullet collision 92");
                     }
                 }
             }
@@ -110,6 +111,8 @@ function onUpdate()
                         alien.bullet = null;
                         fleet.bulletsPresent--;
                         element.onDeath();
+                        console.log("deleting bullet collision 1");
+
                     }
                 }
             
@@ -132,6 +135,8 @@ function onUpdate()
                         alien.bullet = null;
                         fleet.bulletsPresent--;
                         element.onDeath();
+
+                        console.log("deleting bullet collision 2");
                     }
                 }
             }
@@ -153,6 +158,8 @@ function onUpdate()
                         alien.bullet = null;
                         fleet.bulletsPresent--;
                         element.onDeath();
+
+                        console.log("deleting bullet collision 3");
                     } 
                 }
             }

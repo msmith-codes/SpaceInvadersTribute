@@ -2,7 +2,7 @@
 
 class Fleet extends GameObject
 {
-    #debug = true;
+    #debug = false;
 
     #currentState = "movingRight";
     #fleetRows = 5;
@@ -13,6 +13,7 @@ class Fleet extends GameObject
     height = 170;
     bulletsPresent = 0;
     aliens = [];
+    bullets = [];
     shootingAlien = [];
     leftMostColumn = [];
     rightMostColumn = [];
@@ -105,10 +106,15 @@ class Fleet extends GameObject
         }
 
         // Pick a random alien to shoot from the bottom row:
-        if(this.#timer > 1) {
-            this.#timer = 0;
-            let randomAlien = Math.floor(Math.random() * this.shootingAlien.length);
-            this.shootingAlien[randomAlien].shoot();
+        if(this.bulletsPresent <= 4) {
+            if(this.#timer > 1.2) {
+                this.#timer = 0;
+                let randomAlien = Math.floor(Math.random() * this.shootingAlien.length);
+                if(this.shootingAlien[randomAlien].bullet == null) {
+                    this.shootingAlien[randomAlien].shoot();
+                    this.bulletsPresent++;
+                }
+            }
         }
         
         for(let a of this.shootingAlien) {
@@ -171,8 +177,6 @@ class Fleet extends GameObject
             this.width -= 38;
         }
         
-        
-
         this.xPos += this.velocityX * this.#speed * (delta);        
         this.yPos += this.velocityY * this.#speed * (delta);
     }

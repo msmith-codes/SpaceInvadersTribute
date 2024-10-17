@@ -4,7 +4,7 @@ class AlienBullet extends GameObject
 {
     #speed = 100;
     width = 4;
-    height = 10;
+    height = 15;
     onDraw()
     {
         for(let x = 0; x < this.width; x++) {

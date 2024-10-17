@@ -90,6 +90,7 @@ class Alien extends GameObject
             if(this.bullet.yPos > theCanvas.height) {
                 this.bullet = null;
                 this.#fleet.bulletsPresent--;
+                console.log("bullet hit bottom");
             } else {
                 this.bullet.onUpdate(delta);
             }
